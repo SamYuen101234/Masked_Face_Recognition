@@ -1,7 +1,7 @@
 from dataset import TripletDataset
 from model import FaceNet
 from sampler import samples
-from train import train
+from train import train, load
 from test import evalulate, test
 from util import get_Optimizer, get_Scheduler, get_Sampler
 
@@ -9,6 +9,8 @@ import torch
 import pandas as pd
 from torch.utils.data import DataLoader
 from torchsummary import summary
+
+import os
 
 if __name__ == "__main__":
     # config
@@ -20,7 +22,7 @@ if __name__ == "__main__":
     sampler = None
     weight_decay = 1e-3
     lr = 1e-3
-    dropout = 0.3
+    dropout = 0.5
     # resnet, effnet or None(IncepetionResNet)
     model_name = None
     pretrain = True
@@ -30,23 +32,25 @@ if __name__ == "__main__":
     scheduler_name = 'step'
     # sgd or None(adam) or rmsprop
     optimizer_type = 'sgd'
-    num_epochs = 30
+    num_epochs = 10
     eval_every = 960
     # margin for triplet loss
     margin=2
     # name to open or save the model
     name = 'facenet.pth'
+    load_local_model = True
 
     # device: cpu or cuda
+    os.environ['CUDA_VISIBLE_DEVICES']='2,3' # specify which gpu you want to use
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print("Device:",device)
 
     # read scv
-    df_train = pd.read_csv('train.csv')
-    df_valid = pd.read_csv('valid.csv')
-    df_eval1 = pd.read_csv('eval_same.csv')
-    df_eval2 = pd.read_csv('eval_diff.csv')
-    df_test = pd.read_csv('test.csv')
+    df_train = pd.read_csv('../Data/train.csv')
+    df_valid = pd.read_csv('../Data/valid.csv')
+    df_eval1 = pd.read_csv('../Data/eval_same.csv')
+    df_eval2 = pd.read_csv('../Data/eval_diff.csv')
+    df_test = pd.read_csv('../Data/test.csv')
 
     # label_to_samples
     label_to_samples = samples(df_train)
@@ -70,6 +74,10 @@ if __name__ == "__main__":
     facenet = FaceNet(model_name=model_name, pool=pool, embedding_size=embedding_size, dropout=dropout, pretrain=pretrain, device=device)
     facenet = torch.nn.DataParallel(facenet, device_ids=[0,1])
     optimizer = get_Optimizer(facenet, optimizer_type, lr, weight_decay) # optimizer
+    if load_local_model:
+        load(name, facenet, optimizer)
+        temp = name.split('.')
+        name = temp[0] + '_new.' + temp[1]
     scheduler = get_Scheduler(optimizer, lr, scheduler_name) # scheduler
 
     # train

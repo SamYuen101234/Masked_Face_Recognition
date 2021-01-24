@@ -28,7 +28,7 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-    plt.savefig('test_result.png')
+    plt.savefig('../Result/test_result.png')
 
 def result(model,dataloader, device):
     dist = []
@@ -58,12 +58,10 @@ def evalulate(model, eval_loader1, eval_loader2, device):
     dist2 = result(model,eval_loader2, device)
     same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
     diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
-    difference = np.absolute(same_hist[0] - diff_hist[0])
+    difference = same_hist[0] - diff_hist[0]
     difference[:same_hist[0].argmax()] = np.Inf
     difference[diff_hist[0].argmax():] = np.Inf
-    return (same_hist[1][difference.argmin()] + same_hist[1][difference.argmin() + 1])/2
-
-
+    return (same_hist[1][np.where(difference <= 0)[0].min()] + same_hist[1][np.where(difference <= 0)[0].min() - 1])/2
 
 def test(model, test_loader, dist_threshold, device):
     label = []

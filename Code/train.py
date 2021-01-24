@@ -9,26 +9,28 @@ import numpy as np
 def save(save_path, model, optimizer):
     if save_path==None:
         return
-    save_path = save_path
-    state_dict = {'model_state_dict': model.state_dict(),
-                  'optimizer_state_dict': optimizer.state_dict()}
+    torch.save({
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict()
+    }, '../Model/' + save_path)
+    print('Model saved to ==> {../Model/save_path}')
 
-    torch.save(state_dict, save_path)
-    print(f'Model saved to ==> {save_path}')
-
-def load(model, optimizer):
-    save_path = f'cifar_net.pt'
-    state_dict = torch.load(save_path)
-    model.load_state_dict(state_dict['model_state_dict'])
-    optimizer.load_state_dict(state_dict['optimizer_state_dict'])
-    print(f'Model loaded from <== {save_path}')
+def load(name, model, optimizer):
+    checkpoint = torch.load('../Model/' + name)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    for state in optimizer.state.values():
+        for k, v in state.items():
+            if isinstance(v, torch.Tensor):
+                state[k] = v.cuda()
 
 def train(model,train_loader,valid_loader,valid_loader1,valid_loader2,optimizer,scheduler,num_epochs,eval_every,margin,device,name):
     epoch_loss_list = {'train':[], 'valid':[]}
-    overlap_list = []
+    IOU_list = []
     global_step = 0
     train_loss = AverageMeter()
     valid_loss = AverageMeter()
+    best_IOU = 1
     #train_average_margin = AverageMeter()
     total_step = len(train_loader)*num_epochs
     print(f'total steps: {total_step}')
@@ -70,28 +72,29 @@ def train(model,train_loader,valid_loader,valid_loader1,valid_loader2,optimizer,
         difference[:same_hist[0].argmax()] = np.Inf
         difference[diff_hist[0].argmax():] = np.Inf
         dist_threshold = (same_hist[1][np.where(difference <= 0)[0].min()] + same_hist[1][np.where(difference <= 0)[0].min() - 1])/2
-        # dist_threshold = (same_hist[1][difference.argmin()] + same_hist[1][difference.argmin() + 1])/2
         overlap = np.sum(dist1>=dist_threshold) + np.sum(dist2<=dist_threshold)
         IOU = overlap / (dist1.shape[0] * 2 - overlap)
         print('dist_threshold:',dist_threshold,'overlap:',overlap,'IOU:',IOU)
         plt.legend(loc='upper right')
-        plt.savefig('distribution_epoch'+str(epoch+1)+'.png')
+        plt.savefig('../Result/distribution_epoch'+str(epoch+1)+'.png')
         plt.clf()
 
         epoch_loss_list['train'].append(train_loss.avg)
         epoch_loss_list['valid'].append(valid_loss.avg)
-        overlap_list.append(overlap)
+        IOU_list.append(IOU)
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16,9))
         ax1.plot(range(len(epoch_loss_list['train'])), epoch_loss_list['train'], label=('train_loss'))
         ax1.plot(range(len(epoch_loss_list['valid'])), epoch_loss_list['valid'], label=('valid_loss'))
-        ax2.plot(range(len(overlap_list)), overlap_list, label=('overlap'))
+        ax2.plot(range(len(IOU_list)), IOU_list, label=('IOU'))
         ax1.legend(prop={'size': 15})
         ax2.legend(prop={'size': 15})
-        plt.savefig('loss.png')
+        plt.savefig('../Result/loss.png')
         plt.clf()
 
-        save(name,model,optimizer)
+        if IOU < best_IOU:
+            best_IOU = IOU
+            save(name, model, optimizer)
 
         train_loss.reset()
         valid_loss.reset()
