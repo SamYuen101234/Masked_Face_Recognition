@@ -77,17 +77,21 @@ def train(model,train_loader,valid_loader1,valid_loader2,optimizer,scheduler,num
                 val_loss.update(valid_loss.item())
         dist1 = result(model,valid_loader1,device, loss_fn='triplet')
         dist2 = result(model,valid_loader2,device, loss_fn='triplet')
-        same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
-        diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
-        difference = same_hist[0] - diff_hist[0]
-        difference[:same_hist[0].argmax()] = np.Inf
-        difference[diff_hist[0].argmax():] = np.Inf
-        dist_threshold = (same_hist[1][np.where(difference <= 0)[0].min()] + same_hist[1][np.where(difference <= 0)[0].min() - 1])/2
-        overlap = np.sum(dist1>=dist_threshold) + np.sum(dist2<=dist_threshold)
-        IOU = overlap / (dist1.shape[0] * 2 - overlap)
+        try:
+            same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
+            diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
+            plt.legend(loc='upper right')
+            plt.savefig('result/distribution_epoch'+str(epoch+1)+'.png')
+            difference = same_hist[0] - diff_hist[0]
+            difference[:same_hist[0].argmax()] = np.Inf
+            difference[diff_hist[0].argmax():] = np.Inf
+            dist_threshold = (same_hist[1][np.where(difference <= 0)[0].min()] + same_hist[1][np.where(difference <= 0)[0].min() - 1])/2
+            overlap = np.sum(dist1>=dist_threshold) + np.sum(dist2<=dist_threshold)
+            IOU = overlap / (dist1.shape[0] * 2 - overlap)
+        except:
+            print("Model results in collapse") # if the collapse to 0 then, the result cannot be printed
+
         print('dist_threshold:',dist_threshold,'overlap:',overlap,'IOU:',IOU)
-        plt.legend(loc='upper right')
-        plt.savefig('result/distribution_epoch'+str(epoch+1)+'.png')
         plt.clf()
         IOU_list.append(IOU)
         if IOU < best_IOU:
@@ -152,17 +156,20 @@ def train2(model,train_loader,valid_loader1,valid_loader2,metric_crit,optimizer,
         # val
         dist1 = result(model,valid_loader1,device, loss_fn='arcface')
         dist2 = result(model,valid_loader2,device, loss_fn='arcface')
-        same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
-        diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
-        difference = same_hist[0] - diff_hist[0]
-        difference[:same_hist[0].argmax()] = np.Inf
-        difference[diff_hist[0].argmax():] = np.Inf
-        dist_threshold = (same_hist[1][np.where(difference <= 0)[0].min()] + same_hist[1][np.where(difference <= 0)[0].min() - 1])/2
-        overlap = np.sum(dist1>=dist_threshold) + np.sum(dist2<=dist_threshold)
-        IOU = overlap / (dist1.shape[0] * 2 - overlap)
+        try:
+            same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
+            diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
+            plt.legend(loc='upper right')
+            plt.savefig('result/distribution_epoch'+str(epoch+1)+'.png')
+            difference = same_hist[0] - diff_hist[0]
+            difference[:same_hist[0].argmax()] = np.Inf
+            difference[diff_hist[0].argmax():] = np.Inf
+            dist_threshold = (same_hist[1][np.where(difference <= 0)[0].min()] + same_hist[1][np.where(difference <= 0)[0].min() - 1])/2
+            overlap = np.sum(dist1>=dist_threshold) + np.sum(dist2<=dist_threshold)
+            IOU = overlap / (dist1.shape[0] * 2 - overlap)
+        except:
+            print("Model results in collapse") # if the collapse to 0 then, the result cannot be printed
         print('dist_threshold:',dist_threshold,'overlap:',overlap,'IOU:',IOU)
-        plt.legend(loc='upper right')
-        plt.savefig('result/distribution_epoch'+str(epoch+1)+'.png')
         plt.clf()
         IOU_list.append(IOU)
         if IOU < best_IOU:

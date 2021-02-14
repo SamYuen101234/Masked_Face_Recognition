@@ -28,7 +28,7 @@ if __name__ == "__main__":
     lr = 1e-1
     dropout = 0.4
     # resnet, effnet or None(IncepetionResNet)
-    model_name = 'resnet'
+    model_name = 'effnet'
     pretrain = False
     # 'arcface' or 'triplet'
     loss_fn = 'arcface'
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     scheduler_name = 'multistep'
     # sgd or None(adam) or rmsprop
     optimizer_type = 'sgd'
-    num_epochs = 70
+    num_epochs = 25
     eval_every = 50
     # arcface loss seting
     arcface_s = 45
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     name = 'arcface.pth'
     #######################################################################################
     #######################################################################################
-    device = torch.device('cuda:2' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
     print(device)
 
     train_dataset = customized_dataset(df_train, mode='train')

@@ -11,7 +11,6 @@ import timm
 
 
 # InceptionResnet V1
-# InceptionResnet V1
 class InceptionResnet(nn.Module):
     def __init__(self, device, pool=None, dropout=0.3, pretrain=True):
         super(InceptionResnet, self).__init__()
@@ -85,7 +84,7 @@ class FaceNet(nn.Module):
         if(model_name=='resnet'):
             self.model = SEResNeXt101(pretrain)
         elif(model_name=='effnet'):
-            self.model = EfficientNetEncoderHead(depth=5, pretrain=pretrain)
+            self.model = EfficientNetEncoderHead(depth=3, pretrain=pretrain)
         else:
             self.model = InceptionResnet(device, pool=pool, dropout=dropout, pretrain=pretrain)
 
