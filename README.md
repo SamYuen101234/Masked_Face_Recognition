@@ -39,6 +39,13 @@ Link: [Google Drive](https://drive.google.com/file/d/15axXyvMhlu4z3_jAZJh16f5wuc
 
 ### Download Pre-train models
 
+| Models     | # Architect|# Loss func |# Pre-trained |# Acc |
+| ----------- | ----------- | ----------- |----------- |----------- |
+| Model1      | InceptionResNetV1       | ArcFace with focal loss     |Yes      |95.xx%       |
+| Model2      | InceptionResNetV1        | Triplet loss with online triplet mining        |Yes             |94.xx%       |
+| Model3      | SE-ResNeXt-101        | ArcFace with focal loss     |No      |93.xx%       |
+
+
 Model1
 Link: [Google Drive]()
 
@@ -50,17 +57,42 @@ Link: [Google Drive]()
 
 If you want to know more about the training process and concept, you can read our progress report and the following papers:
 
-1. [Our progress report (Implementation section)]()
-2. 
+1. [Our progress report (Implementation section)](https://drive.google.com/file/d/17qEgb0ZC0Ml7gym4rl2ShGBbrjmXATQz/view?usp=sharing)
+2. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
+3. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
+4. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
+5. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
+6. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
+7. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
+
+You can find more in the reference list.
 
 ### Run
 
+Before you run you need to install the follow package or library first:
+> pip install tqdm
+> pip install facenet-pytorch
+> pip install pip install efficientnet
+> pip install timm
 
+We expect that you have install other common packages like torch, numpy, pandas...
+
+To train a model with online triplet mining, run:
+> python3 main.py
+
+To train a model with ArcFace, run:
+> python3 main2.py
 
 ### Methodolegy
+
+
+To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
 
 ### Reference list
 
+Only show some important reference:
+
 ### License
+
