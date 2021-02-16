@@ -124,4 +124,4 @@ Only show some important reference:
 
 ### License
 
-MIT license is used here. You can follow the permission to do whatever you want. However, some of our code is from other developers, you should be carefule that some of them may be prohibited from commerical use.
+MIT license is used here. You can follow the permission to do whatever you want. However, some of our code is from other developers, you should be careful that some of them may be prohibited from commerical use.
