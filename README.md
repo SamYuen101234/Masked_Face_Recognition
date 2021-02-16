@@ -49,10 +49,10 @@ Link: [Google Drive](https://drive.google.com/file/d/15axXyvMhlu4z3_jAZJh16f5wuc
 Model1
 Link: [Google Drive]()
 
-Model2:
+Model2
 Link: [Google Drive]()
 
-Model3:
+Model3
 Link: [Google Drive]()
 
 If you want to know more about the training process and concept, you can read our progress report and the following papers:
@@ -88,7 +88,6 @@ To train a model with ArcFace, run:
 
 ### Methodolegy
 
-
 To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
@@ -97,5 +96,32 @@ To know more our training methods in details, please read our progress report an
 
 Only show some important reference:
 
+1. [Schroff, Florian & Kalenichenko, Dmitry & Philbin, James. (2015). FaceNet: A unified embedding for face recognition and clustering. 815-823.10.1109/CVPR.2015.7298682.](https://arxiv.org/abs/1503.03832)
+
+2. [GitHub. X-Zhangyang/Real-World-Masked-Face-Dataset](https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset) 
+
+3. [Aqeel Anwar, Arijit Raychowdhury (2020), Masked Face Recognition for Secure Authentication, arXiv:2008.11104](https://arxiv.org/abs/2008.11104)
+
+4. [Mingxing Tan, Quoc V. Le (2019), EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks, arXiv:1905.11946](https://arxiv.org/abs/1905.11946)
+
+5. [Filip Radenović, Giorgos Tolias, Ondřej Chum (2017), Fine-tuning CNN Image Retrieval with No Human Annotation, arXiv:1711.02512](https://arxiv.org/abs/1711.02512)
+
+6. [Jiankang Deng, Jia Guo, Niannan Xue, Stefanos Zafeiriou (2018), ArcFace: Additive Angular Margin Loss for Deep Face Recognition, arXiv:1801.07698](ArcFace: Additive Angular Margin Loss for Deep Face Recognition)
+
+7. [Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár (2017), Focal Loss for Dense Object Detection, arXiv:1708.02002](https://arxiv.org/abs/1708.02002)
+
+8. [GitHub. aqeelanwar/MaskTheFace.](https://github.com/aqeelanwar/MaskTheFace)
+
+9. [Kaipeng Zhang, Zhanpeng Zhang, Zhifeng Li, Yu Qiao (2016), Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks, arXiv:1604.02878](https://arxiv.org/abs/1604.02878)
+
+10. [Olivier Moindrot blog. 2018. Triplet Loss and Online Triplet Mining in TensorFlow - Olivier Moindrot.](https://omoindrot.github.io/triplet-loss)
+
+11. [GitHub. NegatioN/OnlineMiningTripletLoss.](https://github.com/NegatioN/OnlineMiningTripletLoss)
+
+12. [GitHub. rwightman/triplet_loss.py.](https://gist.github.com/rwightman/fff86a015efddcba8b3c8008167ea705)
+
+13. [Github. ZhaoJ9014/face.evoLVe.PyTorch.](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
+
 ### License
 
+MIT license is used here. You can follow the permission to do whatever you want. However, some of our code is from other developers, you should be carefule that some of them may be prohibited from commerical use.
