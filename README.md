@@ -71,8 +71,11 @@ You can find more in the reference list.
 
 Before you run you need to install the follow package or library first:
 > pip install tqdm
+
 > pip install facenet-pytorch
+
 > pip install pip install efficientnet
+
 > pip install timm
 
 We expect that you have install other common packages like torch, numpy, pandas...
