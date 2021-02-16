@@ -88,6 +88,14 @@ To train a model with ArcFace, run:
 
 ### Methodolegy
 
+![Architect](./img/architect.png)
+Figure 1. Architects for Triplet loss and ArcFace
+![Triplet](./img/Triplet.png)
+Figure 2. A simple method for triplet loss but this might suffer from model collapse
+![Online Triplet Mining](./img/Online_triplet.png)
+Figure 3. Online triplet mining method, the more popular one for triplet mining.
+
+
 To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
