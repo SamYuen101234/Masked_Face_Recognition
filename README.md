@@ -85,6 +85,14 @@ To train a model with ArcFace, run:
 
 ### Methodolegy
 
+![Architect](./img/architect.png)
+Figure 1. Architects for Triplet loss and ArcFace
+![Triplet](./img/Triplet.png)
+Figure 2. A simple method for triplet loss but this might suffer from model collapse
+![Online Triplet Mining](./img/Online_triplet.png)
+Figure 3. Online triplet mining method, the more popular one for triplet mining.
+
+
 To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
@@ -103,7 +111,7 @@ Only show some important reference:
 
 5. [Filip Radenović, Giorgos Tolias, Ondřej Chum (2017), Fine-tuning CNN Image Retrieval with No Human Annotation, arXiv:1711.02512](https://arxiv.org/abs/1711.02512)
 
-6. [Jiankang Deng, Jia Guo, Niannan Xue, Stefanos Zafeiriou (2018), ArcFace: Additive Angular Margin Loss for Deep Face Recognition, arXiv:1801.07698](ArcFace: Additive Angular Margin Loss for Deep Face Recognition)
+6. [Jiankang Deng, Jia Guo, Niannan Xue, Stefanos Zafeiriou (2018), ArcFace: Additive Angular Margin Loss for Deep Face Recognition, arXiv:1801.07698](https://arxiv.org/abs/1801.07698)
 
 7. [Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár (2017), Focal Loss for Dense Object Detection, arXiv:1708.02002](https://arxiv.org/abs/1708.02002)
 
@@ -121,4 +129,4 @@ Only show some important reference:
 
 ### License
 
-MIT license is used here. You can follow the permission to do whatever you want. However, some of our code is from other developers, you should be carefule that some of them may be prohibited from commerical use.
+MIT license is used here. You can follow the permission to do whatever you want. However, some of our code is from other developers, you should be careful that some of them may be prohibited from commerical use.
