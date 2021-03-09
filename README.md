@@ -37,6 +37,9 @@ Link: [Google Drive](https://drive.google.com/file/d/1RdFbIGDiMMVaAPpt8CsykJRqTE
 7. Test CSV, 782KB
 Link: [Google Drive](https://drive.google.com/file/d/15axXyvMhlu4z3_jAZJh16f5wucoOS_Jd/view?usp=sharing)
 
+8. Real faces 
+Link: [Google Drive]()
+
 ### Download Pre-train models
 
 | Models     | # Architect|# Loss func |# Pre-trained |# Acc |
@@ -45,15 +48,18 @@ Link: [Google Drive](https://drive.google.com/file/d/15axXyvMhlu4z3_jAZJh16f5wuc
 | Model2      | InceptionResNetV1        | Triplet loss with online triplet mining        |Yes             |94.xx%       |
 | Model3      | SE-ResNeXt-101        | ArcFace with focal loss     |No      |93.xx%       |
 
+* You may train a model with better performance than ours because we are dealing with our fyp in limited time. You can feel free to fine tune the hyperparameters or deal with any other approaches with our resources.
 
 Model1
-Link: [Google Drive]()
+Link: [Google Drive](https://drive.google.com/file/d/1dIy-g2m6i-fmC4jlmOs3xKx7lJ90ei38/view?usp=sharing)
 
-Model2
-Link: [Google Drive]()
+(Please be careful that model 2 and its optimizer are combined in this .pth format rather than .pt format)
+
+Model2 
+Link: [Google Drive](https://drive.google.com/file/d/1aZE6NEvIqIkwFn6U-vBkhbmG4yz38AFQ/view?usp=sharing)
 
 Model3
-Link: [Google Drive]()
+Link: [Google Drive](https://drive.google.com/file/d/1Ydb49_XrkwhNzOFAo3N-ENEB53JFAnhj/view?usp=sharing)
 
 If you want to know more about the training process and concept, you can read our progress report and the following papers:
 
@@ -71,11 +77,11 @@ You can find more in the reference list.
 
 Before you run you need to install the follow package or library first:
 > pip install tqdm
-
+> 
 > pip install facenet-pytorch
-
-> pip install pip install efficientnet
-
+>
+> pip install efficientnet
+> 
 > pip install timm
 
 We expect that you have install other common packages like torch, numpy, pandas...
@@ -99,6 +105,51 @@ Figure 3. Online triplet mining method, the more popular one for triplet mining.
 To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
+We only show the result of the model 1 here.
+
+Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained model, the model needs to be trained with more epochs (around 60 - 120 epochs). We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
+![train_loss](./img/train_loss.png)
+
+
+#### Train result
+
+
+
+
+#### Evaluation method
+
+Eval graph: The L2 distance of the embeddings of the image pairs.
+
+![distribution](./img/distribution.png)
+
+IOU: We plot the eval graph at the end of each epoch. IOU = area of the intersection / area of the eval graph
+
+![IOU](./img/IOU.png)
+
+
+The model with lowest IOU will be saved as the best model.
+
+#### Test result
+We use 6,482 pairs of images to be the test set, half of the pairs are the same person and the another half is different people.
+
+Label 0 means that the pair is from two different people and label 1 means that they are from the same person.
+
+This result is from the model1 InceptionResnetV1 with ArcFace.
+The accuracy is almost 96%.
+
+The test result matches the eval result. As you can see, more pairs of same person are classified incorrectly.
+
+![Test Result](./img/test_result.png)
+
+Evaluation matrix:
+
+
+
+
+
+
+> Please be careful that the face recognition test performance here may be different from a face recognition system. It is becuase face recognition system needs more technical approaches rather then a CNN model with threshold only.
+
 
 ### Reference list
 
@@ -133,3 +184,6 @@ Only show some important reference:
 ### License
 
 MIT license is used here. You can follow the permission to do whatever you want. However, some of our code is from other developers, you should be careful that some of them may be prohibited from commerical use.
+
+### Contact
+Please feel free to push your changes to improve the code here. If you have any problems, you could contact us through <samyuan101234@gmail.com>
