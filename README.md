@@ -86,6 +86,8 @@ Before you run you need to install the follow package or library first:
 
 We expect that you have install other common packages like torch, numpy, pandas...
 
+Create folders call models and result under this directory to save the models and eval images during training or change the directory in the script (train.py).
+
 To train a model with online triplet mining, run:
 > python3 main.py
 
