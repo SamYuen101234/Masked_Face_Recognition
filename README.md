@@ -144,18 +144,17 @@ The test result matches the eval result. As you can see, more pairs of same pers
 ![Test Result](./img/test_result.png)
 
 Evaluation matrix:
-'''
-Accuracy: 0.9585004628201172
 
-              precision    recall  f1-score   support
+    Accuracy: 0.9585004628201172
 
-           0       0.93      0.99      0.96      3241
-           1       0.99      0.93      0.96      3241
+                  precision    recall  f1-score   support
 
-    accuracy                           0.96      6482
-   macro avg       0.96      0.96      0.96      6482
-weighted avg       0.96      0.96      0.96      6482
-'''
+               0       0.93      0.99      0.96      3241
+               1       0.99      0.93      0.96      3241
+
+        accuracy                           0.96      6482
+       macro avg       0.96      0.96      0.96      6482
+    weighted avg       0.96      0.96      0.96      6482
 
 
 
