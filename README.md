@@ -51,7 +51,7 @@ Link: [Google Drive]()
 * You may train a model with better performance than ours because we are dealing with our fyp in limited time. You can feel free to fine tune the hyperparameters or deal with any other approaches with our resources.
 
 Model1
-Link: [Google Drive](https://drive.google.com/file/d/1dIy-g2m6i-fmC4jlmOs3xKx7lJ90ei38/view?usp=sharing)
+Link: [Google Drive](https://drive.google.com/file/d/1DsMV1R5eqwHiVgfujlCa4NSpqmk-ecor/view?usp=sharing)
 
 (Please be careful that model 2 and its optimizer are combined in this .pth format rather than .pt format)
 
@@ -107,16 +107,20 @@ Figure 3. Online triplet mining method, the more popular one for triplet mining.
 To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
-We only show the result of the model 1 here.
-
-Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained model, the model needs to be trained with more epochs (around 60 - 120 epochs). We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
-![train_loss](./img/train_loss.png)
+In our experiment, we observe that Arcface's performance is slightly better than online triplet mining and also the training time per epoch is shorter than online triplet mining. It is becuase online triplet mining need to sample mini batch to calculate the hardest/semi-hard triplet loss. We only show the result of the model 1 (Pre-trained InceptionResNetV1 with Arcface here)
 
 
 #### Train result
 
+In the paper [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104), they mentioned that they tried online triplet mining and train the InceptionResNetV1 without pre-trained. We also followed the same method to train a model, but the result is not that good as the one shown in their paper. In our experiment with online triplet mining, the model was difficult to converge and it is very sensitive to how you select the triplet pairs e.g. hardest triplets or semi-hard triplets. Then, arcface is much easier to be controlled compared with online triplet mining.  
 
+Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained model, the model needs to be trained with more epochs (around 60 - 120 epochs). We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
+![train_loss](./img/train_loss.png)
 
+We also tried SE-ResNeXt-101 and EffectiveNetB2 to B4. The two models only have the pre-trained version on ImageNet. It is not suitable for transfer learning on face recognition. However, we also did experiment on their pre-trained version and starting from scratch. The result is that there may result collaspe in the model very easily which was not only happened with triplet loss but also arcface sometimes. EfficientNet is usually more likely to result in model collapse after few training epochs.
+
+Model results in collapse:
+![model_collapse](./img/model_collapse.png)
 
 #### Evaluation method
 
@@ -162,6 +166,17 @@ Evaluation matrix:
 
 > Please be careful that the face recognition test performance here may be different from a face recognition system. It is becuase face recognition system needs more technical approaches rather then a CNN model with threshold only.
 
+
+### What you can improve through our resource
+1. Try fix the problem of model collapse in EfficientNet. If you have sufficient computational power, you can try EfficientNet B7. We used a workstation with 4 RTX2080 Ti 11GB GPUs, but the cuda does not have enough memory when we try EfficientNet B7. We believe that EfficientNet is much more powerful than InceptionResNetV1 according to Google's paper.
+2. Compare Online triplet mining and arcface again, we did not perform too much experiment on them becuase of limited FYP period.
+3. Try to sample a more balancing dataset based on our training set, this means that each class have same number of images.
+4. Fine tune the hyperparameters
+5. Try more new techniques
+6. Use real masked facial images to train, rather than using simulated masked images. (This is quite difficult, we can only wait some research team like VGG from U of Oxford to collect a large real masked facial images)
+
+
+**Masked facial recognition is not that difficult or impossible. The most difficult part is that how to achieve a performance as good as normal facial recognition (>99% accuracy). Also, the most time consuming part / difficult part is not machine learning techniques/approaches here. It is how to collect a suitable training dataset with enough data. You can find some papers about this topic quite easily, but it is not easy to find suitable datasets/code. That why we open-source our pre-processed training data to everyone.**
 
 ### Reference list
 
