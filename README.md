@@ -9,6 +9,7 @@ This Github repository shows how to train a masked face recognition model. We us
 We use a tool call [MaskTheFace](https://sites.google.com/view/masktheface/home) to simulate masked facial images based on some famous face image datasets. We choose several different masks to simulate. They are green surgical mask (#44b4a8), blue surgical mask (#1ca0f4), white N95 mask (#FFFFFF), white KN-95 mask and black cloth mask (#000000). 
 
 Preview of part of the data:
+
 ![train_data](./img/train_data.png)
 
 Figure 1. Some training data of CASIA after preprocessing
