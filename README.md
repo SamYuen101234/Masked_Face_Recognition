@@ -119,7 +119,8 @@ Training loss: Since we use pre-trained model, the loss reduces and converges mo
 
 We also tried SE-ResNeXt-101 and EffectiveNetB2 to B4. The two models only have the pre-trained version on ImageNet. It is not suitable for transfer learning on face recognition. However, we also did experiment on their pre-trained version and starting from scratch. The result is that there may result collaspe in the model very easily which was not only happened with triplet loss but also arcface sometimes. EfficientNet is usually more likely to result in model collapse after few training epochs.
 
-Model results in collapse:
+Eval graph of the EfficientNetB4 results in collapse:
+
 ![model_collapse](./img/model_collapse.png)
 
 #### Evaluation method
