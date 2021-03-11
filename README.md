@@ -10,10 +10,12 @@ We use a tool call [MaskTheFace](https://sites.google.com/view/masktheface/home)
 
 Preview of part of the data:
 ![train_data](./img/train_data.png)
+
 Figure 1. Some training data of CASIA after preprocessing
 
 
 ![image_pair](./img/image_pair.png)
+
 Figure 2. Some image pairs of Evaluation and testing sets, the upper two pairs are same person, the bottom two pairs are different people
 
 
@@ -111,11 +113,11 @@ To train a model with ArcFace, run:
 ### Methodolegy
 
 ![Architect](./img/architect.png)
-Figure 1. Architects for Triplet loss and ArcFace
+Figure 3. Architects for Triplet loss and ArcFace
 ![Triplet](./img/Triplet.png)
-Figure 2. A simple method for triplet loss but this might suffer from model collapse
+Figure 4. A simple method for triplet loss but this might suffer from model collapse
 ![Online Triplet Mining](./img/Online_triplet.png)
-Figure 3. Online triplet mining method, the more popular one for triplet mining.
+Figure 5. Online triplet mining method, the more popular one for triplet mining.
 
 
 To know more our training methods in details, please read our progress report and the paper in reference.
@@ -132,24 +134,25 @@ In the paper [Masked Face Recognition for Secure Authentication](https://arxiv.o
 Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained, the model needs to be trained with more epochs (around 60 - 120 epochs) compared to 20 - 30 epochs with pre-trained model. We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
 
 ![train_loss](./img/train_loss.png)
-Figure 4. Training loss with learning rate decay
+Figure 6. Training loss with learning rate decay
 
 We also tried SE-ResNeXt-101 and EffectiveNetB2 to B4. The two models only have the pre-trained version on ImageNet. It is not suitable for transfer learning on face recognition. However, we also did experiment on their pre-trained version and starting from scratch. The result is that there may result collaspe in the model very easily which was not only happened with triplet loss but also arcface sometimes. EfficientNet is usually more likely to result in model collapse after few training epochs.
 
 ![model_collapse](./img/model_collapse.png)
 
+Figure7. Model Collapse of EfficientNet B4
 
 #### Evaluation method
 
 Eval graph: The L2 distance of the embeddings of the image pairs. We will calculate and plot this graph at the end of each epoch.
 
 ![distribution](./img/distribution.png)
-Figure 6. Eval graph
+Figure 8. Eval graph
 
 IOU: We plot the eval graph at the end of each epoch. IOU = area of the intersection / area of the eval graph
 
 ![IOU](./img/IOU.png)
-Figure 7. IOU
+Figure 9. IOU
 
 
 The model with lowest IOU will be saved as the best model.
@@ -165,7 +168,7 @@ The accuracy is almost 96%.
 The test result matches the eval result. As you can see, more pairs of same person are classified incorrectly.
 
 ![Test Result](./img/test_result.png)
-Figure 8. Confusion matrix
+Figure 10. Confusion matrix
 
 Evaluation matrix:
 
