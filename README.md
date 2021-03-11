@@ -6,6 +6,15 @@ Supervisor: Prof. Dit-Yan YEUNG
 This Github repository shows how to train a masked face recognition model. We use the masked facial recognition models to build a building security system in another [Github repository](https://github.com/SamYuen101234/BSMFR).
 
 ### Download masked facial recognition train and test data
+We use a tool call [MaskTheFace](https://sites.google.com/view/masktheface/home) to simulate masked facial images based on some famous face image datasets. We choose several different masks to simulate. They are green surgical mask (#44b4a8), blue surgical mask (#1ca0f4), white N95 mask (#FFFFFF), white KN-95 mask and black cloth mask (#000000). 
+
+Preview of part of the data:
+![train_data](./img/train_data.png)
+Figure 1. Some training data of CASIA after preprocessing
+
+
+![image_pair](./img/image_pair.png)
+Figure 2. Some image pairs of Evaluation and testing sets, the upper two pairs are same person, the bottom two pairs are different people
 
 
 | Dataset     | # Identities|# Images |
@@ -37,8 +46,12 @@ Link: [Google Drive](https://drive.google.com/file/d/1RdFbIGDiMMVaAPpt8CsykJRqTE
 7. Test CSV, 782KB
 Link: [Google Drive](https://drive.google.com/file/d/15axXyvMhlu4z3_jAZJh16f5wucoOS_Jd/view?usp=sharing)
 
-8. Real faces 
-Link: [Google Drive]()
+8. Real faces, 81MB
+Link: [Google Drive](https://drive.google.com/file/d/1EBR2jgBLNhMoyZxA6f4ffX1la8VWStXa/view?usp=sharing)
+
+There are totally 75 real people in this real face dataset, every class has 3 no masked and masked images seperately. Some of than has higher resolution and has not been cropped and aligned by MTCNN. It is becuase we use this data on our recognition system to simulate users' registration.
+
+Most of them are politicans or celebrities. Some of the real faces are from [MRF2](https://sites.google.com/view/masktheface/home), some of them are collected by us from Google.
 
 ### Download Pre-train models
 
@@ -115,24 +128,28 @@ In our experiment, we observe that Arcface's performance is slightly better than
 
 In the paper [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104), they mentioned that they tried online triplet mining and train the InceptionResNetV1 without pre-trained. We also followed the same method to train a model, but the result is not that good as the one shown in their paper. In our experiment with online triplet mining, the model was difficult to converge and it is very sensitive to how you select the triplet pairs e.g. hardest triplets or semi-hard triplets. Then, arcface is much easier to be controlled compared with online triplet mining.  
 
+
 Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained, the model needs to be trained with more epochs (around 60 - 120 epochs) compared to 20 - 30 epochs with pre-trained model. We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
+
 ![train_loss](./img/train_loss.png)
+Figure 4. Training loss with learning rate decay
 
 We also tried SE-ResNeXt-101 and EffectiveNetB2 to B4. The two models only have the pre-trained version on ImageNet. It is not suitable for transfer learning on face recognition. However, we also did experiment on their pre-trained version and starting from scratch. The result is that there may result collaspe in the model very easily which was not only happened with triplet loss but also arcface sometimes. EfficientNet is usually more likely to result in model collapse after few training epochs.
 
-Eval graph of the EfficientNet B4 results in collapse:
-
 ![model_collapse](./img/model_collapse.png)
+
 
 #### Evaluation method
 
-Eval graph: The L2 distance of the embeddings of the image pairs.
+Eval graph: The L2 distance of the embeddings of the image pairs. We will calculate and plot this graph at the end of each epoch.
 
 ![distribution](./img/distribution.png)
+Figure 6. Eval graph
 
 IOU: We plot the eval graph at the end of each epoch. IOU = area of the intersection / area of the eval graph
 
 ![IOU](./img/IOU.png)
+Figure 7. IOU
 
 
 The model with lowest IOU will be saved as the best model.
@@ -148,6 +165,7 @@ The accuracy is almost 96%.
 The test result matches the eval result. As you can see, more pairs of same person are classified incorrectly.
 
 ![Test Result](./img/test_result.png)
+Figure 8. Confusion matrix
 
 Evaluation matrix:
 
