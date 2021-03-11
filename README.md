@@ -50,26 +50,27 @@ Link: [Google Drive]()
 
 * You may train a model with better performance than ours because we are dealing with our fyp in limited time. You can feel free to fine tune the hyperparameters or deal with any other approaches with our resources.
 
-Model1
+Model1 (148MB)
 Link: [Google Drive](https://drive.google.com/file/d/1DsMV1R5eqwHiVgfujlCa4NSpqmk-ecor/view?usp=sharing)
 
 (Please be careful that model 2 and its optimizer are combined in this .pth format rather than .pt format)
 
-Model2 
+Model2 (290MB, including model and optimizer)
 Link: [Google Drive](https://drive.google.com/file/d/1aZE6NEvIqIkwFn6U-vBkhbmG4yz38AFQ/view?usp=sharing)
 
-Model3
+Model3 (229MB)
 Link: [Google Drive](https://drive.google.com/file/d/1Ydb49_XrkwhNzOFAo3N-ENEB53JFAnhj/view?usp=sharing)
 
-If you want to know more about the training process and concept, you can read our progress report and the following papers:
+If you want to know more about the training process and concept, you can read our progress report, final report and the following papers:
 
 1. [Our progress report (Implementation section)](https://drive.google.com/file/d/17qEgb0ZC0Ml7gym4rl2ShGBbrjmXATQz/view?usp=sharing)
-2. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
-3. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
-4. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
-5. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
-6. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
-7. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
+2. [Final report: coming at end middle of April 2021]
+3. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
+4. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
+5. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
+6. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
+7. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
+8. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
 
 You can find more in the reference list.
 
