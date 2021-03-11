@@ -6,6 +6,15 @@ Supervisor: Prof. Dit-Yan YEUNG
 This Github repository shows how to train a masked face recognition model. We use the masked facial recognition models to build a building security system in another [Github repository](https://github.com/SamYuen101234/BSMFR).
 
 ### Download masked facial recognition train and test data
+We use a tool call [MaskTheFace](https://sites.google.com/view/masktheface/home) to simulate masked facial images based on some famous face image datasets. We choose several different masks to simulate. They are green surgical mask (#44b4a8), blue surgical mask (#1ca0f4), white N95 mask (#FFFFFF), white KN-95 mask and black cloth mask (#000000). 
+
+Preview of part of the data:
+![train_data](./img/train_data.png)
+Figure 1. Some training data of CASIA after preprocessing
+
+
+![image_pair](./img/image_pair.png)
+Figure 2. Some image pairs of Evaluation and testing sets, the upper two pairs are same person, the bottom two pairs are different people
 
 
 | Dataset     | # Identities|# Images |
@@ -37,8 +46,12 @@ Link: [Google Drive](https://drive.google.com/file/d/1RdFbIGDiMMVaAPpt8CsykJRqTE
 7. Test CSV, 782KB
 Link: [Google Drive](https://drive.google.com/file/d/15axXyvMhlu4z3_jAZJh16f5wucoOS_Jd/view?usp=sharing)
 
-8. Real faces 
-Link: [Google Drive]()
+8. Real faces, 81MB
+Link: [Google Drive](https://drive.google.com/file/d/1EBR2jgBLNhMoyZxA6f4ffX1la8VWStXa/view?usp=sharing)
+
+There are totally 75 real people in this real face dataset, every class has 3 no masked and masked images seperately. Some of than has higher resolution and has not been cropped and aligned by MTCNN. It is becuase we use this data on our recognition system to simulate users' registration.
+
+Most of them are politicans or celebrities. Some of the real faces are from [MRF2](https://sites.google.com/view/masktheface/home), some of them are collected by us from Google.
 
 ### Download Pre-train models
 
@@ -50,26 +63,27 @@ Link: [Google Drive]()
 
 * You may train a model with better performance than ours because we are dealing with our fyp in limited time. You can feel free to fine tune the hyperparameters or deal with any other approaches with our resources.
 
-Model1
-Link: [Google Drive](https://drive.google.com/file/d/1dIy-g2m6i-fmC4jlmOs3xKx7lJ90ei38/view?usp=sharing)
+Model1 (148MB)
+Link: [Google Drive](https://drive.google.com/file/d/1DsMV1R5eqwHiVgfujlCa4NSpqmk-ecor/view?usp=sharing)
 
 (Please be careful that model 2 and its optimizer are combined in this .pth format rather than .pt format)
 
-Model2 
+Model2 (290MB, including model and optimizer)
 Link: [Google Drive](https://drive.google.com/file/d/1aZE6NEvIqIkwFn6U-vBkhbmG4yz38AFQ/view?usp=sharing)
 
-Model3
+Model3 (229MB)
 Link: [Google Drive](https://drive.google.com/file/d/1Ydb49_XrkwhNzOFAo3N-ENEB53JFAnhj/view?usp=sharing)
 
-If you want to know more about the training process and concept, you can read our progress report and the following papers:
+If you want to know more about the training process and concept, you can read our progress report, final report and the following papers:
 
 1. [Our progress report (Implementation section)](https://drive.google.com/file/d/17qEgb0ZC0Ml7gym4rl2ShGBbrjmXATQz/view?usp=sharing)
-2. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
-3. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
-4. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
-5. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
-6. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
-7. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
+2. [Final report: coming at the middle of April 2021]
+3. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
+4. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
+5. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
+6. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
+7. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
+8. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
 
 You can find more in the reference list.
 
@@ -85,6 +99,8 @@ Before you run you need to install the follow package or library first:
 > pip install timm
 
 We expect that you have install other common packages like torch, numpy, pandas...
+
+Create folders call models and result under this directory to save the models and eval images during training or change the directory in the script (train.py).
 
 To train a model with online triplet mining, run:
 > python3 main.py
@@ -105,26 +121,34 @@ Figure 3. Online triplet mining method, the more popular one for triplet mining.
 To know more our training methods in details, please read our progress report and the paper in reference.
 
 ### Result
-We only show the result of the model 1 here.
-
-Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained model, the model needs to be trained with more epochs (around 60 - 120 epochs). We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
-![train_loss](./img/train_loss.png)
+In our experiment, we observe that Arcface's performance is slightly better than online triplet mining and also the training time per epoch is shorter than online triplet mining. It is becuase online triplet mining need to sample mini batch to calculate the hardest/semi-hard triplet loss. We only show the result of the model 1 (Pre-trained InceptionResNetV1 with Arcface here)
 
 
 #### Train result
 
+In the paper [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104), they mentioned that they tried online triplet mining and train the InceptionResNetV1 without pre-trained. We also followed the same method to train a model, but the result is not that good as the one shown in their paper. In our experiment with online triplet mining, the model was difficult to converge and it is very sensitive to how you select the triplet pairs e.g. hardest triplets or semi-hard triplets. Then, arcface is much easier to be controlled compared with online triplet mining.  
 
+Training loss: Since we use pre-trained model, the loss reduces and converges more easier than without transfer learning. Without pre-trained, the model needs to be trained with more epochs (around 60 - 120 epochs) compared to 20 - 30 epochs with pre-trained model. We also use multi-step lr decay scheduler to reduce the learning rate. At the beginning, the learning rate is 0.1. The lr will decay 0.1 after epoch 5, 10, 15 and 20. 
 
+![train_loss](./img/train_loss.png)
+Figure 4. Training loss with learning rate decay
+
+We also tried SE-ResNeXt-101 and EffectiveNetB2 to B4. The two models only have the pre-trained version on ImageNet. It is not suitable for transfer learning on face recognition. However, we also did experiment on their pre-trained version and starting from scratch. The result is that there may result collaspe in the model very easily which was not only happened with triplet loss but also arcface sometimes. EfficientNet is usually more likely to result in model collapse after few training epochs.
+
+![model_collapse](./img/model_collapse.png)
+Figure 5. Eval graph of the EfficientNet B4 results in collapse
 
 #### Evaluation method
 
-Eval graph: The L2 distance of the embeddings of the image pairs.
+Eval graph: The L2 distance of the embeddings of the image pairs. We will calculate and plot this graph at the end of each epoch.
 
 ![distribution](./img/distribution.png)
+Figure 6. Eval graph
 
 IOU: We plot the eval graph at the end of each epoch. IOU = area of the intersection / area of the eval graph
 
 ![IOU](./img/IOU.png)
+Figure 7. IOU
 
 
 The model with lowest IOU will be saved as the best model.
@@ -140,9 +164,20 @@ The accuracy is almost 96%.
 The test result matches the eval result. As you can see, more pairs of same person are classified incorrectly.
 
 ![Test Result](./img/test_result.png)
+Figure 8. Confusion matrix
 
 Evaluation matrix:
 
+    Accuracy: 0.9585004628201172
+
+                  precision    recall  f1-score   support
+
+               0       0.93      0.99      0.96      3241
+               1       0.99      0.93      0.96      3241
+
+        accuracy                           0.96      6482
+       macro avg       0.96      0.96      0.96      6482
+    weighted avg       0.96      0.96      0.96      6482
 
 
 
@@ -150,6 +185,17 @@ Evaluation matrix:
 
 > Please be careful that the face recognition test performance here may be different from a face recognition system. It is becuase face recognition system needs more technical approaches rather then a CNN model with threshold only.
 
+
+### What you can improve through our resources
+1. Try fix the problem of model collapse in EfficientNet. If you have sufficient computational power, you can try EfficientNet B7. We used a workstation with 4 RTX2080 Ti 11GB GPUs, but the cuda does not have enough memory when we try EfficientNet B7. We believe that EfficientNet is much more powerful than InceptionResNetV1 according to Google's paper.
+2. Compare Online triplet mining and arcface again, we did not perform too much experiment on them becuase of limited FYP period.
+3. Try to sample a more balancing dataset based on our training set, this means that each class have same number of images.
+4. Fine tune the hyperparameters
+5. Try more new techniques
+6. Use real masked facial images to train, rather than using simulated masked images. (This is quite difficult, we can only wait some research team like VGG from U of Oxford to collect a large real masked facial images)
+
+
+**Masked facial recognition is not that difficult or impossible. The most difficult part is that how to achieve a performance as good as normal facial recognition (>99% accuracy). Also, the most time consuming part / difficult part is not machine learning techniques/approaches here. It is how to collect a suitable training dataset with enough data. You can find some papers about this topic quite easily, but it is not easy to find suitable datasets/code. That why we open-source our pre-processed training data to everyone.**
 
 ### Reference list
 
