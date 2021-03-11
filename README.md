@@ -188,7 +188,7 @@ Evaluation matrix:
 
 
 
-> Please be careful that the face recognition test performance here may be different from a face recognition system. It is becuase face recognition system needs more technical approaches rather then a CNN model with threshold only.
+**Please be careful that the face recognition test performance here may be different from a face recognition system. It is becuase face recognition system needs more technical approaches rather then a CNN model with threshold only.**
 
 
 ### What you can improve through our resources
