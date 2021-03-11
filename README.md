@@ -64,7 +64,7 @@ Link: [Google Drive](https://drive.google.com/file/d/1Ydb49_XrkwhNzOFAo3N-ENEB53
 If you want to know more about the training process and concept, you can read our progress report, final report and the following papers:
 
 1. [Our progress report (Implementation section)](https://drive.google.com/file/d/17qEgb0ZC0Ml7gym4rl2ShGBbrjmXATQz/view?usp=sharing)
-2. [Final report: coming at end middle of April 2021]
+2. [Final report: coming at the middle of April 2021]
 3. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
 4. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
 5. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
