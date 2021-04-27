@@ -92,13 +92,12 @@ If you want to know more about the training process and concept, you can read ou
 
 1. [Our final report, the masked facial recognition system](https://drive.google.com/file/d/1UMAxqBX42XRubtzxHzHe0-mYubYd9yXQ/view?usp=sharing)
 2. [Our progress report (Implementation section)](https://drive.google.com/file/d/17qEgb0ZC0Ml7gym4rl2ShGBbrjmXATQz/view?usp=sharing)
-3. [Final report: coming at the middle of April 2021]
-4. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
-5. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
-6. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
-7. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
-8. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
-9. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
+3. [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832)
+4. [Offline versus Online Triplet Mining based on Extreme Distances of Histopathology Patches](https://arxiv.org/abs/2007.02200)
+5. [Masked Face Recognition for Secure Authentication](https://arxiv.org/abs/2008.11104)
+6. [Deep metric learning using Triplet network](https://arxiv.org/abs/1412.6622)
+7. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698)
+8. [Normal Face Recignition with ArcFace in Pytorch](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch)
 
 You can find more in the reference list.
 
