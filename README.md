@@ -77,6 +77,17 @@ Link: [Google Drive](https://drive.google.com/file/d/1aZE6NEvIqIkwFn6U-vBkhbmG4y
 Model3 (229MB)
 Link: [Google Drive](https://drive.google.com/file/d/1Ydb49_XrkwhNzOFAo3N-ENEB53JFAnhj/view?usp=sharing)
 
+To load the model 2, you need to use this function becuase this model was trained by another groupmate:
+
+    def load(name, model, optimizer):
+        checkpoint = torch.load('../Model/' + name)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        for state in optimizer.state.values():
+            for k, v in state.items():
+                if isinstance(v, torch.Tensor):
+                    state[k] = v.cuda()
+
 If you want to know more about the training process and concept, you can read our progress report, final report and the following papers:
 
 1. [Our progress report (Implementation section)](https://drive.google.com/file/d/17qEgb0ZC0Ml7gym4rl2ShGBbrjmXATQz/view?usp=sharing)
