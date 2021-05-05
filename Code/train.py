@@ -6,14 +6,26 @@ from test import result
 import matplotlib.pyplot as plt
 import numpy as np
 
-def save(save_path, model, optimizer):
+# def save(save_path, model, optimiz er):
+#     if save_path==None:
+#         return
+#     torch.save({
+#         'model_state_dict': model.state_dict(),
+#         'optimizer_state_dict': optimizer.state_dict()
+#     }, '../Model/' + save_path)
+#     print('Model saved to ==> {../Model/save_path}')
+
+def save(save_path, model, optimizer=None, scheduler=None):
     if save_path==None:
         return
-    torch.save({
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict()
-    }, '../Model/' + save_path)
-    print('Model saved to ==> {../Model/save_path}')
+    checkpoint = {
+        'model': model,
+        'optimizer': optimizer,
+        'scheduler': scheduler,
+    }
+    save_path = '../Model/' + save_path
+    torch.save(checkpoint, save_path)
+    print(f'Model saved to ==> {save_path}')
 
 def load(name, model, optimizer):
     checkpoint = torch.load('../Model/' + name)
@@ -33,11 +45,15 @@ def train(model,train_loader,valid_loader,valid_loader1,valid_loader2,optimizer,
     best_IOU = 1
     #train_average_margin = AverageMeter()
     total_step = len(train_loader)*num_epochs
+    count = 0
     print(f'total steps: {total_step}')
     for epoch in range(num_epochs):
         print(f'epoch {epoch+1}')
         #losses = []
         for _, data in enumerate(tqdm(train_loader)):
+            if count > 0:
+                break
+            count += 1
             model.train()
             inputs = data['image'].to(device) # inputs
             target = data['target'].to(device) # targets
@@ -68,6 +84,8 @@ def train(model,train_loader,valid_loader,valid_loader1,valid_loader2,optimizer,
         dist2 = result(model,valid_loader2,device)
         same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
         diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
+        plt.legend(loc='upper right')
+        plt.savefig('../Result/distribution_epoch'+str(epoch+1)+'.png')
         difference = same_hist[0] - diff_hist[0]
         difference[:same_hist[0].argmax()] = np.Inf
         difference[diff_hist[0].argmax():] = np.Inf
@@ -75,8 +93,6 @@ def train(model,train_loader,valid_loader,valid_loader1,valid_loader2,optimizer,
         overlap = np.sum(dist1>=dist_threshold) + np.sum(dist2<=dist_threshold)
         IOU = overlap / (dist1.shape[0] * 2 - overlap)
         print('dist_threshold:',dist_threshold,'overlap:',overlap,'IOU:',IOU)
-        plt.legend(loc='upper right')
-        plt.savefig('../Result/distribution_epoch'+str(epoch+1)+'.png')
         plt.clf()
 
         epoch_loss_list['train'].append(train_loss.avg)
@@ -94,7 +110,7 @@ def train(model,train_loader,valid_loader,valid_loader1,valid_loader2,optimizer,
 
         if IOU < best_IOU:
             best_IOU = IOU
-            save(name, model, optimizer)
+            save(name, model, optimizer, scheduler)
 
         train_loss.reset()
         valid_loss.reset()

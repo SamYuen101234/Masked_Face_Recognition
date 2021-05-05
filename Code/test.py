@@ -56,6 +56,11 @@ def evalulate(model, eval_loader1, eval_loader2, device):
     dist1 = result(model,eval_loader1, device)
     # diff target pairs
     dist2 = result(model,eval_loader2, device)
+
+    with open('test.npy', 'wb') as f:
+        np.save(f, dist1)
+        np.save(f, dist2)
+
     same_hist = plt.hist(dist1, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='same')
     diff_hist = plt.hist(dist2, 100, range=[np.floor(np.min([dist1.min(), dist2.min()])),np.ceil(np.max([dist1.max(), dist2.max()]))], alpha=0.5, label='diff')
     difference = same_hist[0] - diff_hist[0]

@@ -173,7 +173,8 @@ def batch_all_triplet_loss(labels, embeddings, margin, squared=False, epoch=0):
 
     # invalid = torch.nonzero(triplet_loss == 0).size(0)
 
-    triplet_loss[triplet_loss < margin * (1.25 - epoch * 0.01)] = 0
+    # triplet_loss[triplet_loss < margin * (1.3 - epoch%30 * 0.01)] = 0
+    triplet_loss[triplet_loss < margin] = 0
 
     # print('invalid:', invalid)
     # print('easy:', torch.nonzero(triplet_loss == 0).size(0))

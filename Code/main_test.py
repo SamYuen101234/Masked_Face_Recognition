@@ -32,58 +32,41 @@ if __name__ == "__main__":
     scheduler_name = 'multistep'
     # sgd or None(adam) or rmsprop
     optimizer_type = None
-    num_epochs = 0
+    num_epochs = 20
     eval_every = 1000
     # margin for triplet loss
     margin=2
     # name to open or save the model
-    name = 'facenet_best.pth'
+    name = 'arcface1.pt'
     load_local_model = False
 
     # os.environ['CUDA_LAUNCH_BLOCKING']='1'
 
     # device: cpu or cuda
-    os.environ['CUDA_VISIBLE_DEVICES']='3' # specify which gpu you want to use
-    # device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    device = torch.device('cpu')
+    os.environ['CUDA_VISIBLE_DEVICES']='2' # specify which gpu you want to use
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print("Device:",device)
 
-    # read scv
-    df_train = pd.read_csv('../Data/train2.csv')
-    df_valid = pd.read_csv('../Data/valid.csv')
     df_eval1 = pd.read_csv('../Data/eval_same.csv')
     df_eval2 = pd.read_csv('../Data/eval_diff.csv')
     df_test = pd.read_csv('../Data/test.csv')
 
-    # label_to_samples
-    label_to_samples = samples(df_train)
-
-    # dataset, sampler and dataloader
-    train_dataset = TripletDataset(df_train, mode='train', label_to_samples=label_to_samples)
-    valid_dataset = TripletDataset(df_valid, mode='valid')
     eval_dataset1 = TripletDataset(df_eval1, mode='eval')
     eval_dataset2 = TripletDataset(df_eval2, mode='eval')
     test_dataset = TripletDataset(df_test, mode='test')
 
-    train_sampler = get_Sampler(sampler, train_dataset, p=8, k=16)
-    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, drop_last=False, sampler=train_sampler)
-    valid_loader = DataLoader(valid_dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, drop_last=False)
     eval_loader1 = DataLoader(eval_dataset1, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, drop_last=False)
     eval_loader2 = DataLoader(eval_dataset2, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, drop_last=False)
     test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, drop_last=False)
 
-
     # model, optimizer, scheduler
-    facenet = FaceNet(model_name=model_name, pool=pool, embedding_size=embedding_size, dropout=dropout, pretrain=pretrain, device=device).to(device)
-    # facenet = torch.nn.DataParallel(facenet, device_ids=[0,1])
-    optimizer = get_Optimizer(facenet, optimizer_type, lr, weight_decay) # optimizer
-    if load_local_model:
-        load(name, facenet, optimizer)
-        temp = name.split('.')
-        name = temp[0] + '_new.' + temp[1]
-    scheduler = get_Scheduler(optimizer, lr, scheduler_name) # scheduler
+    # facenet = FaceNet(model_name=model_name, pool=pool, embedding_size=embedding_size, dropout=dropout, pretrain=pretrain, device=device).to(device)
+    # optimizer = get_Optimizer(facenet, optimizer_type, lr, weight_decay) # optimizer
+    # load(name, facenet, optimizer)
 
-    # train
-    # train(facenet,train_loader,valid_loader,eval_loader1,eval_loader2,optimizer,scheduler,num_epochs,eval_every,margin,device,name)
+    facenet = torch.load('../Model/arcface1.pt')
+    device = torch.device('cpu')
+
+    # evaluate & test
     dist_threshold = evalulate(facenet, eval_loader1, eval_loader2, device)
-    test(facenet,test_loader,dist_threshold,device)
+    # test(facenet,test_loader,dist_threshold,device)

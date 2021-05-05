@@ -26,6 +26,7 @@ def get_Scheduler(optimizer, lr, scheduler_name=None):
     elif(scheduler_name=='cosine'):
         return optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=1000)
     elif(scheduler_name=='multistep'):
-        return optim.lr_scheduler.MultiStepLR(optimizer, milestones=[10,20,30,40,45], gamma=0.5)
+        # return optim.lr_scheduler.MultiStepLR(optimizer, milestones=[3,13,30], gamma=0.3)
+        return optim.lr_scheduler.MultiStepLR(optimizer, milestones=[6,20,40], gamma=0.1)
     else:
-        return optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
+        return optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.99)
