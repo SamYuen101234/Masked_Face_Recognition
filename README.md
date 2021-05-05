@@ -1,5 +1,5 @@
 # Masked Facial Recognition
-2020/2021 HKUST CSE FYP Masked Facial Recognition, developer: Sam Yuen, Alen Xie, Tony Cheng
+2020/2021 HKUST CSE FYP Masked Facial Recognition, developer: Sam Yuen, Alan Xie, Tony Cheng
 
 Supervisor: Prof. Dit-Yan YEUNG
 
