@@ -75,7 +75,7 @@ Model2 (290MB, including model and optimizer)
 Link: [Google Drive](https://drive.google.com/file/d/1aZE6NEvIqIkwFn6U-vBkhbmG4yz38AFQ/view?usp=sharing)
 
 Model3 (229MB)
-Link: [Google Drive](https://drive.google.com/file/d/1Ydb49_XrkwhNzOFAo3N-ENEB53JFAnhj/view?usp=sharing)
+Link: [Google Drive](https://drive.google.com/file/d/1pdbNvqtemODmp7f9qGXqTnt1f_F-pKMN/view?usp=sharing)
 
 To load the model 2, you need to use this function becuase this model was trained by another groupmate:
 
