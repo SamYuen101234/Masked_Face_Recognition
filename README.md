@@ -249,3 +249,8 @@ MIT license is used here. You can follow the permission to do whatever you want.
 
 ### Contact
 Please feel free to push your changes to improve the code here. If you have any problems, you could contact us through <samyuan101234@gmail.com>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=SamYuen101234/Masked_Face_Recognition&type=Date)](https://star-history.com/#SamYuen101234/Masked_Face_Recognition&Date)
+
